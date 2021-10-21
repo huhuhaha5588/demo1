@@ -3,16 +3,14 @@ package com.dev.demo1.service;
 import com.aspose.pdf.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jodconverter.core.office.OfficeException;
 import org.jodconverter.core.office.OfficeUtils;
 import org.jodconverter.local.JodConverter;
-import org.jodconverter.local.LocalConverter;
 import org.jodconverter.local.office.LocalOfficeManager;
-import org.jodconverter.local.filter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.Locale;
 //import java.nio.file.Paths;
 //import java.awt.Color;
 //import java.awt.Rectangle;
@@ -37,14 +35,14 @@ public class ConverterService {
 
         File inputFile = new File(inputPathAndName);
         if(!inputFile.exists()){
-            log.info("输入路径文件不存在");
+            log.error("输入路径文件不存在: {}", inputPathAndName);
             return ;
         }
 
         String inputName = inputFile.getName();
         String outputPath = inputFile.getParent() + File.separator + targetExtensionType + File.separator;
         //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
-        log.info("输出路径： " + outputPath);
+        log.info("输出路径： {}", outputPath);
 
         //在相同路径下创建新文件格式的文件夹
         File outputPathFile = new File(outputPath);
@@ -89,7 +87,7 @@ public class ConverterService {
 
         File inputFile = new File(inputPathAndName);
         if(!inputFile.exists()){
-            log.info("输入路径文件不存在");
+            log.error("输入路径文件不存在");
             return ;
         }
 
@@ -172,7 +170,7 @@ public class ConverterService {
 
         File inputFile = new File(inputPathAndName);
         if (!inputFile.exists()) {
-            log.info("输入路径文件不存在");
+            log.error("输入路径文件不存在");
             return;
         }
 
@@ -180,8 +178,8 @@ public class ConverterService {
         String pdfOutputPath = inputFile.getParent() + File.separator + "pdf" + File.separator;
         String pptOutputPath = inputFile.getParent() + File.separator + "ppt" + File.separator;
         //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
-        log.info("pdf输出路径：" + pdfOutputPath);
-        log.info("ppt输出路径： " + pptOutputPath);
+        log.info("pdf输出路径：{}" + pdfOutputPath);
+        log.info("ppt输出路径： {}" + pptOutputPath);
         long start = System.currentTimeMillis();
 //        //转换html 到 pdf
 //        commandService.executeCmd("soffice --headless --convert-to pdf --outdir " +
@@ -209,19 +207,53 @@ public class ConverterService {
 
 
     /**
-     *有水印不使用
+     *转换后会新加水印不使用
      */
-    public void pdf2ppt()  {
-        // Load PDF document
-        Document pdfDocument = new Document("/Users/johnzhang/work-insights/test/Cigna-Express.pdf");
-//        Document pdfDocument = new Document("/Users/johnzhang/临时文件夹/开发编程/Office格式转换/Chapter 6 Formatting Pages_ Advanced.pdf");
+    public void pdf2ppt(String pdfPathAndName, String pptOutputPath)  {
+        log.info("pdfPathAndName: {}", pdfPathAndName);
 
+//        Locale locale = new Locale("en", "NL");
+        Locale.setDefault(new Locale("en-us"));
+        // Load PDF document
+        Document pdfDocument = new Document(pdfPathAndName);
+        File file = new File(pdfPathAndName);
         // Set PPTX save options
         PptxSaveOptions pptxOptions = new PptxSaveOptions();
         pptxOptions.setSlidesAsImages(true);
+        log.info("file.getName(): {}", file.getName());
+        String fileName = file.getName().replace(".pdf",".ppt");
+        log.info("fileName: {} ", fileName);
+        log.info("输出文件路径: {} ", pptOutputPath + fileName);
         // Save PDF as PPTX
-//        pdfDocument.save("/Users/johnzhang/临时文件夹/开发编程/Office格式转换/Chapter 6 Formatting Pages_ Advanced.pptx", pptxOptions);
-        pdfDocument.save("/Users/johnzhang/work-insights/test/Cigna-Express.pptx", pptxOptions);
+        pdfDocument.save(pptOutputPath + fileName, pptxOptions);
+    }
+
+
+    public void cmdPDF2PPT(String pdfPathAndName, String pptOutputPath) throws FileNotFoundException {
+
+
+        File pdfFile = new File(pdfPathAndName);
+        if (!pdfFile.exists()) {
+            log.error("输入路径文件不存在");
+            throw new FileNotFoundException(pdfPathAndName);
+        }
+        //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
+        log.info("pdf文件路径：{}" + pdfPathAndName);
+        log.info("ppt输出路径： {}" + pptOutputPath);
+
+        long start = System.currentTimeMillis();
+
+        //转换html 到 pdf
+
+        log.info("pdf2ppt转换开始");
+        commandService.executeCmd(
+                        "soffice --infilter=\"impress_pdf_import\" --convert-to ppt --outdir " +
+                        pptOutputPath + " " +
+                        pdfPathAndName);
+        long end = System.currentTimeMillis();
+        log.info("pdf2ppt转换结束");
+        log.info("耗时: {} ms", (end-start));
+
     }
 
 
