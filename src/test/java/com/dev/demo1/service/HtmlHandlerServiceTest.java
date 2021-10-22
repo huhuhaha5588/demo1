@@ -23,7 +23,7 @@ import java.util.Set;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class HtmlPutIntoTempTest {
+public class HtmlHandlerServiceTest {
     @Value("${config.properties.path.convert:src/main/resources/template-html/}")
     private String convertPath;
 
@@ -37,7 +37,7 @@ public class HtmlPutIntoTempTest {
     private String result = "result.html";
 
     @Autowired
-    private HtmlPutIntoTemp htmlPutIntoTemp;
+    private HtmlHandlerService htmlHandlerService;
 
     //模版文件路径
     private String templatePathAndName;
@@ -82,7 +82,7 @@ public class HtmlPutIntoTempTest {
         String origenTempString = FileUtils.readFileToString(templateFile, Charset.forName("utf8"));
 
         //
-        String resultString = htmlPutIntoTemp.replaceHtmlFromFile(templateFile,map);
+        String resultString = htmlHandlerService.replaceHtmlFromFile(templateFile,map);
         for(String key :keys){
             //模版中是否有要替换的key
             if (origenTempString.contains("${" + key +"}")){
@@ -93,7 +93,7 @@ public class HtmlPutIntoTempTest {
                 log.error("模版中未包含替换的key ${" + key + "}");
             }
         }
-//        log.info("替换模版中的key之后 " + resultString);
+        //log.info("替换模版中的key之后 " + resultString);
 
         //把最终结果放在result.html文件中
         BufferedWriter bufferedWriter = null;
@@ -110,5 +110,14 @@ public class HtmlPutIntoTempTest {
         }
 
 
+    }
+
+
+    @Test
+    public void html2textFromFile() throws IOException {
+
+        File contentFile = new  File(contentPathAndName);
+        String text = htmlHandlerService.html2textFromFile(contentFile);
+        log.info(text);
     }
 }
