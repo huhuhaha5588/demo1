@@ -12,23 +12,27 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
+import java.io.IOException;
 
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ConverterServiceTest {
-
-
+    /**
+     * 整个类型转换测试类
+     * 默认在resources/convert-path/文件夹下操作
+     *
+     */
     @Value("${config.properties.path.convert:src/main/resources/convert-path/}")
     private String convertPath;
 
-    //需要准备好的html文件
+    //默认准备好的html文件
     private String htmlInputFileName = "testfroala.html";
 
     //待转换文件全路径
     private String htmlInputPathAndName;
 
-    //需要准备好的pdf文件
+    //默认准备好的pdf文件
     private String pdfInputFileName = "FroalaByWkhtmltopdf.pdf";
 
     //待转换文件全路径
@@ -53,6 +57,10 @@ public class ConverterServiceTest {
 
     }
 
+
+    /**
+     * 生成结果: 在以方法名作为文件名的子文件夹下
+     */
     @Test
     public void html2pdf() {
         try {
@@ -64,7 +72,7 @@ public class ConverterServiceTest {
         File inputFile = new File(htmlInputPathAndName);
         String htmlFileName = inputFile.getName();
         //输出文件路径下新建pdf文件夹，且文件名不变，后缀名改为pdf
-        String outputPath = htmlInputPathAndName.replace(htmlFileName,"pdf/"+htmlFileName.replace(".html",".pdf"));
+        String outputPath = htmlInputPathAndName.replace(htmlFileName,"html2pdf/"+htmlFileName.replace(".html",".pdf"));
 
         File pdfOutputFile = new File(outputPath);
         //转换后的pdf文件是否生成
@@ -72,7 +80,9 @@ public class ConverterServiceTest {
     }
 
 
-
+    /**
+     * 生成结果: 在以方法名作为文件名的子文件夹下
+     */
     @Test
     public void pdf2ppt() {
         File inputFile = new File(pdfInputPathAndName);
@@ -100,13 +110,21 @@ public class ConverterServiceTest {
 
     }
 
+
+    /**
+     * 生成结果: 在以方法名作为文件名的子文件夹下
+     */
     @Test
-    public void html2ppt() {
+    public void jodConverterhHtml2ppt() {
+
+        htmlInputPathAndName = "src/main/resources/template-html/testThymeleafResult.html";
+
+
         File inputFile = new File(htmlInputPathAndName);
         String htmlFileName = inputFile.getName();
         log.info("htmlFileName: {}",htmlFileName);
         //输出文件路径下新建pdf文件夹，且文件名不变，后缀名改为pdf
-        String pdfOutputPath = htmlInputPathAndName.replace(htmlFileName,"pdf/"+htmlFileName.replace(".html",".pdf"));
+        String pdfOutputPath = htmlInputPathAndName.replace(htmlFileName,"JodConverter-html2pdf"  + File.separator + htmlFileName.replace(".html",".pdf"));
         log.info("pdfOutputPath: {}",pdfOutputPath);
         File pdfOutputFile = new File(pdfOutputPath);
         //若存在先删除
@@ -114,7 +132,7 @@ public class ConverterServiceTest {
             pdfOutputFile.delete();
         }
 
-        String pptOutputPath = htmlInputPathAndName.replace(htmlFileName,"ppt/"+htmlFileName.replace(".html",".ppt"));
+        String pptOutputPath = htmlInputPathAndName.replace(htmlFileName,"JodConverter-html2pdf"  + File.separator + "openoffic-cmd-pdf2ppt" + File.separator + htmlFileName.replace(".html",".ppt"));
         log.info("pptOutputPath: {}",pptOutputPath);
         File pptOutputFile = new File(pptOutputPath);
         //若存在先删除
@@ -122,7 +140,7 @@ public class ConverterServiceTest {
             pptOutputFile.delete();
         }
         try {
-            converterService.html2ppt(htmlInputPathAndName);
+            converterService.jodConverterhHtml2ppt(htmlInputPathAndName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,22 +154,26 @@ public class ConverterServiceTest {
 
     }
 
+    /**
+     * 生成结果: 在以方法名作为文件名的子文件夹下
+     */
     @Test
-    public void cmdhtml2ppt() {
+    public void openOfficeCmdHtml2ppt() {
 
-
+        htmlInputPathAndName = "src/main/resources/template-html/testThymeleafResult.html";
 
         File inputFile = new File(htmlInputPathAndName);
         String htmlFileName = inputFile.getName();
         //输出文件路径下新建pdf文件夹，且文件名不变，后缀名改为pdf
-        String pdfOutputPath = htmlInputPathAndName.replace(htmlFileName,"pdf/"+htmlFileName.replace(".html",".pdf"));
+
+        String pdfOutputPath = htmlInputPathAndName.replace(htmlFileName,"openOfficeCmdHtml2ppt" + File.separator + "cmd-tml2pdf" + File.separator + htmlFileName.replace(".html",".pdf"));
+        String pptOutputPath = htmlInputPathAndName.replace(htmlFileName,"openOfficeCmdHtml2ppt" + File.separator + "cmd-tml2pdf" + File.separator + "cmd-pdf2ppt" + File.separator + htmlFileName.replace(".html",".ppt"));
         File pdfOutputFile = new File(pdfOutputPath);
         //若存在先删除
         if(pdfOutputFile.exists()){
             pdfOutputFile.delete();
         }
 
-        String pptOutputPath = htmlInputPathAndName.replace(htmlFileName,"ppt/"+htmlFileName.replace(".html",".ppt"));
         File pptOutputFile = new File(pptOutputPath);
         //若存在先删除
         if(pptOutputFile.exists()){
@@ -159,7 +181,7 @@ public class ConverterServiceTest {
         }
 
         try {
-            converterService.cmdhtml2ppt(htmlInputPathAndName);
+            converterService.openOfficeCmdHtml2ppt(htmlInputPathAndName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -172,14 +194,18 @@ public class ConverterServiceTest {
     }
 
 
+    /**
+     * 生成结果: 在以方法名作为文件名的子文件夹下
+     */
     @Test
     public void cmdPDF2PPT() {
-
+//        pdfInputPathAndName = "src/main/resources/convert-path/cmdwkhtmltopdf/testThymeleafResult.pdf";
+//        pdfInputPathAndName = "src/main/resources/template-html/pdf/testThymeleafResult.pdf";
         File inputFile = new File(pdfInputPathAndName);
         String pdfFileName = inputFile.getName();
 
         //输出文件路径下新建pdf文件夹，且文件名不变，后缀名改为pdf
-        String pptOutputPath = pdfInputPathAndName.replace(pdfFileName,"cmdpdf2ppt/");//+pdfFileName.replace(".ppt",".pdf")
+        String pptOutputPath = pdfInputPathAndName.replace(pdfFileName,"cmdPDF2PPT/");//+pdfFileName.replace(".ppt",".pdf")
         File pdfOutputFile = new File(pptOutputPath, pdfFileName.replace(".ppt",".pdf"));
         //若存在先删除
         if(pdfOutputFile.exists()){
@@ -196,6 +222,20 @@ public class ConverterServiceTest {
         }
     }
 
+    /**
+     * 生成结果: 在以方法名作为文件名的子文件夹下
+     * 文件夹需要提前创建好
+     */
+
+    @Test
+    public void cmdwkhtmltopdf() throws IOException {
+
+
+        htmlInputPathAndName = "src/main/resources/template-html/testThymeleafResult.html";
+        String outputPdfPath = convertPath  +"cmdwkhtmltopdf/"+ "testThymeleafResult.pdf";
+
+        converterService.cmdwkhtmltopdf(htmlInputPathAndName, outputPdfPath);
+    }
 
     @After
     public void tearDown() throws Exception {

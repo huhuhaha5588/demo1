@@ -1,5 +1,6 @@
 package com.dev.demo1.service;
 
+import com.dev.demo1.htmlhandler.entity.HtmlPage;
 import lombok.extern.slf4j.Slf4j;
 import org.jodconverter.core.util.FileUtils;
 import org.junit.Assert;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.ui.Model;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,6 +39,9 @@ public class HtmlHandlerServiceTest {
 
     //结果文件名
     private String result = "result.html";
+
+    @Autowired
+    TemplateEngine templateEngine;
 
     @Autowired
     private HtmlHandlerService htmlHandlerService;
@@ -120,4 +127,48 @@ public class HtmlHandlerServiceTest {
         String text = htmlHandlerService.html2textFromFile(contentFile);
         log.info(text);
     }
+
+
+    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */
+    @Test
+    public void testThymeleaf() throws IOException {
+
+        //从content文件转为string，template-html/content.thml
+        File contentFile = new  File(contentPathAndName);
+        String htmlString = FileUtils.readFileToString(contentFile, Charset.forName("utf8"));
+
+        //要替换的目标和内容放入Context
+        Context ctx = new Context();
+        ctx.setVariable("title", "这里是title~~~~~~~~~");
+        ctx.setVariable("htmlcontent", htmlString);
+
+
+        //用Thymeleaf 的templateEngine进行替换
+        String renderedhtml = templateEngine.process("template",ctx);
+
+        log.info(renderedhtml);
+
+        //把最终结果放在testThymeleafResult.html文件中
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(convertPath + "testThymeleafResult.html"));
+            bufferedWriter.write(renderedhtml);
+
+        } catch (IOException e) {
+            System.out.println("Exception occurred: " + e.getMessage());
+
+        } finally {
+            if (bufferedWriter != null)
+                bufferedWriter.close();
+        }
+
+    }
+
+
+
+
 }

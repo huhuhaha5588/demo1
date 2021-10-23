@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.demo1.htmlhandler.dao.HtmlPageMapper">
+  <resultMap id="BaseResultMap" type="com.dev.demo1.htmlhandler.entity.HtmlPage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="document_no" jdbcType="INTEGER" property="documentNo" />
+    <result column="page_no" jdbcType="INTEGER" property="pageNo" />
+    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="html" jdbcType="VARCHAR" property="html" />
+    <result column="html_no_tag" jdbcType="VARCHAR" property="htmlNoTag" />
+    <result column="stake_holder_id" jdbcType="INTEGER" property="stakeHolderId" />
+    <result column="yesr" jdbcType="INTEGER" property="yesr" />
+    <result column="active" jdbcType="TINYINT" property="active" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+    <result column="delete_by" jdbcType="VARCHAR" property="deleteBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, organization_id, user_id, document_no, page_no, `order`, title, html, html_no_tag, 
+    stake_holder_id, yesr, active, create_time, create_by, update_time, update_by, delete_time, 
+    delete_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from html_page
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from html_page
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dev.demo1.htmlhandler.entity.HtmlPage" useGeneratedKeys="true">
+    insert into html_page (organization_id, user_id, document_no, 
+      page_no, `order`, title, 
+      html, html_no_tag, stake_holder_id, 
+      yesr, active, create_time, 
+      create_by, update_time, update_by, 
+      delete_time, delete_by)
+    values (#{organizationId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{documentNo,jdbcType=INTEGER}, 
+      #{pageNo,jdbcType=INTEGER}, #{order,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{html,jdbcType=VARCHAR}, #{htmlNoTag,jdbcType=VARCHAR}, #{stakeHolderId,jdbcType=INTEGER}, 
+      #{yesr,jdbcType=INTEGER}, #{active,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{deleteTime,jdbcType=TIMESTAMP}, #{deleteBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.dev.demo1.htmlhandler.entity.HtmlPage" useGeneratedKeys="true">
+    insert into html_page
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="organizationId != null">
+        organization_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="documentNo != null">
+        document_no,
+      </if>
+      <if test="pageNo != null">
+        page_no,
+      </if>
+      <if test="order != null">
+        `order`,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="html != null">
+        html,
+      </if>
+      <if test="htmlNoTag != null">
+        html_no_tag,
+      </if>
+      <if test="stakeHolderId != null">
+        stake_holder_id,
+      </if>
+      <if test="yesr != null">
+        yesr,
+      </if>
+      <if test="active != null">
+        active,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+      <if test="deleteBy != null">
+        delete_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="documentNo != null">
+        #{documentNo,jdbcType=INTEGER},
+      </if>
+      <if test="pageNo != null">
+        #{pageNo,jdbcType=INTEGER},
+      </if>
+      <if test="order != null">
+        #{order,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="html != null">
+        #{html,jdbcType=VARCHAR},
+      </if>
+      <if test="htmlNoTag != null">
+        #{htmlNoTag,jdbcType=VARCHAR},
+      </if>
+      <if test="stakeHolderId != null">
+        #{stakeHolderId,jdbcType=INTEGER},
+      </if>
+      <if test="yesr != null">
+        #{yesr,jdbcType=INTEGER},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteBy != null">
+        #{deleteBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dev.demo1.htmlhandler.entity.HtmlPage">
+    update html_page
+    <set>
+      <if test="organizationId != null">
+        organization_id = #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="documentNo != null">
+        document_no = #{documentNo,jdbcType=INTEGER},
+      </if>
+      <if test="pageNo != null">
+        page_no = #{pageNo,jdbcType=INTEGER},
+      </if>
+      <if test="order != null">
+        `order` = #{order,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="html != null">
+        html = #{html,jdbcType=VARCHAR},
+      </if>
+      <if test="htmlNoTag != null">
+        html_no_tag = #{htmlNoTag,jdbcType=VARCHAR},
+      </if>
+      <if test="stakeHolderId != null">
+        stake_holder_id = #{stakeHolderId,jdbcType=INTEGER},
+      </if>
+      <if test="yesr != null">
+        yesr = #{yesr,jdbcType=INTEGER},
+      </if>
+      <if test="active != null">
+        active = #{active,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteBy != null">
+        delete_by = #{deleteBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dev.demo1.htmlhandler.entity.HtmlPage">
+    update html_page
+    set organization_id = #{organizationId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      document_no = #{documentNo,jdbcType=INTEGER},
+      page_no = #{pageNo,jdbcType=INTEGER},
+      `order` = #{order,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      html = #{html,jdbcType=VARCHAR},
+      html_no_tag = #{htmlNoTag,jdbcType=VARCHAR},
+      stake_holder_id = #{stakeHolderId,jdbcType=INTEGER},
+      yesr = #{yesr,jdbcType=INTEGER},
+      active = #{active,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      delete_by = #{deleteBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

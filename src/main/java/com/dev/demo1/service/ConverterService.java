@@ -83,7 +83,7 @@ public class ConverterService {
     }
 
 
-    public void html2ppt(String inputPathAndName){
+    public void jodConverterhHtml2ppt(String inputPathAndName){
 
         File inputFile = new File(inputPathAndName);
         if(!inputFile.exists()){
@@ -92,7 +92,7 @@ public class ConverterService {
         }
 
         String inputName = inputFile.getName();
-        String pdfOutputPath = inputFile.getParent() + File.separator + "pdf" + File.separator;
+        String pdfOutputPath = inputFile.getParent() + File.separator + "JodConverter-html2pdf" + File.separator;
         //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
         log.info("pdf输出路径： " + pdfOutputPath);
 
@@ -105,16 +105,7 @@ public class ConverterService {
         File pdfOutputFile = new File(pdfOutputPath+pdfOutputName);
 
 
-        //ppt 输出文件
-        String pptOutputPath = inputFile.getParent() + File.separator + "ppt" + File.separator;
-        //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
-        log.info("ppt输出路径： " + pptOutputPath);
 
-        //在相同路径下创建新文件格式的文件夹
-//        File pptputPathFile = new File(pptOutputPath);
-//        if (!pptputPathFile.exists()) {
-//            pptputPathFile.mkdirs();
-//        }
 //        String pptOutputName = inputName.substring(0,inputName.lastIndexOf("."))+".ppt";
 //        File pptOutputFile = new File(pptOutputPath+pptOutputName);
 
@@ -145,9 +136,6 @@ public class ConverterService {
 //                    .convert(inputFile)
 //                    .to(pptOutputFile)
 //                    .execute();
-
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -155,9 +143,21 @@ public class ConverterService {
             // Stop the office process
             OfficeUtils.stopQuietly(officeManager);
         }
+
+
         //转换pdf 到 ppt
+        //ppt 输出文件
+        String pptOutputPath = inputFile.getParent() + File.separator + "JodConverter-html2pdf"  + File.separator + "openoffic-cmd-pdf2ppt" + File.separator;
+        //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
+        log.info("ppt输出路径： " + pptOutputPath);
+
+        //在相同路径下创建新文件格式的文件夹
+        File pptputPathFile = new File(pptOutputPath);
+        if (!pptputPathFile.exists()) {
+            pptputPathFile.mkdirs();
+        }
         commandService.executeCmd("soffice --infilter=\"impress_pdf_import\" --convert-to ppt --outdir " +
-                inputFile.getParent() + "/ppt/ " +
+                pptOutputPath +" " +
                 pdfOutputPath+pdfOutputName);
         end = System.currentTimeMillis();
         log.info("html2ppt转换结束");
@@ -165,7 +165,7 @@ public class ConverterService {
     }
 
 
-    public void cmdhtml2ppt(String inputPathAndName) {
+    public void openOfficeCmdHtml2ppt(String inputPathAndName) {
 
 
         File inputFile = new File(inputPathAndName);
@@ -175,8 +175,8 @@ public class ConverterService {
         }
 
         String inputName = inputFile.getName();
-        String pdfOutputPath = inputFile.getParent() + File.separator + "pdf" + File.separator;
-        String pptOutputPath = inputFile.getParent() + File.separator + "ppt" + File.separator;
+        String pdfOutputPath = inputFile.getParent() + File.separator + "openOfficeCmdHtml2ppt" + File.separator + "cmd-tml2pdf" + File.separator;
+        String pptOutputPath = inputFile.getParent() + File.separator + "openOfficeCmdHtml2ppt" + File.separator + "cmd-tml2pdf" + File.separator + "cmd-pdf2ppt" + File.separator;
         //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
         log.info("pdf输出路径：{}" + pdfOutputPath);
         log.info("ppt输出路径： {}" + pptOutputPath);
@@ -247,11 +247,49 @@ public class ConverterService {
 
         log.info("pdf2ppt转换开始");
         commandService.executeCmd(
-                        "soffice --infilter=\"impress_pdf_import\" --convert-to ppt --outdir " +
+                        "soffice --headless --infilter=\"impress_pdf_import\" --convert-to ppt --outdir " +
                         pptOutputPath + " " +
                         pdfPathAndName);
         long end = System.currentTimeMillis();
         log.info("pdf2ppt转换结束");
+        log.info("耗时: {} ms", (end-start));
+
+    }
+
+    public void cmdwkhtmltopdf(String htmlPathAndName, String pdfOutputPath) throws FileNotFoundException {
+
+
+        File htmlFile = new File(htmlPathAndName);
+        if (!htmlFile.exists()) {
+            log.error("输入路径文件不存在");
+            throw new FileNotFoundException(htmlPathAndName);
+        }
+
+        File pdfOutputPathDir = new File(pdfOutputPath);
+
+//        pdfOutputPath.contains(".pdf");
+//        if (!(pdfOutputPathDir.isDirectory()&&pdfOutputPathDir.exists())){
+//            log.error("结果路径不存在");
+//            throw new FileNotFoundException(pdfOutputPath);
+//        }
+
+
+        //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
+        log.info("html文件路径：{}" + htmlPathAndName);
+        log.info("pdf输出路径： {}" + pdfOutputPath);
+
+        long start = System.currentTimeMillis();
+
+        //转换html 到 pdf
+
+        log.info("pdf2ppt转换开始");
+        commandService.executeCmd(
+                        "wkhtmltopdf " +
+                        htmlPathAndName + " " +
+                        pdfOutputPath);
+
+        long end = System.currentTimeMillis();
+        log.info("html 到 pdf转换结束");
         log.info("耗时: {} ms", (end-start));
 
     }

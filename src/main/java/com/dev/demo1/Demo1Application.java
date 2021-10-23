@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.dev.demo1.htmlhandler.dao")
+@MapperScan("com.dev.demo1.**.dao")
 public class Demo1Application {
 
     public static void main(String[] args) {

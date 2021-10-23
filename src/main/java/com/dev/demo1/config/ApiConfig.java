@@ -8,6 +8,6 @@ public class ApiConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 
-        registry.addViewController("template1").setViewName("template1");
+        registry.addViewController("template").setViewName("template");
     }
 }
