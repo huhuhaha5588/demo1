@@ -256,7 +256,7 @@ public class ConverterService {
 
     }
 
-    public void cmdwkhtmltopdf(String htmlPathAndName, String pdfOutputPath) throws FileNotFoundException {
+    public void cmdwkhtmltopdf(String htmlPathAndName, String pdfOutputPathAndName) throws FileNotFoundException {
 
 
         File htmlFile = new File(htmlPathAndName);
@@ -265,18 +265,17 @@ public class ConverterService {
             throw new FileNotFoundException(htmlPathAndName);
         }
 
-        File pdfOutputPathDir = new File(pdfOutputPath);
-
-//        pdfOutputPath.contains(".pdf");
-//        if (!(pdfOutputPathDir.isDirectory()&&pdfOutputPathDir.exists())){
-//            log.error("结果路径不存在");
-//            throw new FileNotFoundException(pdfOutputPath);
-//        }
+        //如果没哟路径则创建文件路径
+        String outputpath = new File(pdfOutputPathAndName).getParent();
+        File outputPathDir = new File(outputpath);
+        if (!(outputPathDir.exists())){
+            outputPathDir.mkdirs();
+        }
 
 
         //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
         log.info("html文件路径：{}" + htmlPathAndName);
-        log.info("pdf输出路径： {}" + pdfOutputPath);
+        log.info("pdf输出路径： {}" + pdfOutputPathAndName);
 
         long start = System.currentTimeMillis();
 
@@ -286,7 +285,7 @@ public class ConverterService {
         commandService.executeCmd(
                         "wkhtmltopdf " +
                         htmlPathAndName + " " +
-                        pdfOutputPath);
+                        pdfOutputPathAndName);
 
         long end = System.currentTimeMillis();
         log.info("html 到 pdf转换结束");

@@ -232,8 +232,10 @@ public class ConverterServiceTest {
 
 
         htmlInputPathAndName = "src/main/resources/template-html/testThymeleafResult.html";
-        String outputPdfPath = convertPath  +"cmdwkhtmltopdf/"+ "testThymeleafResult.pdf";
 
+
+        File output = new File(htmlInputPathAndName);
+        String outputPdfPath =  output.getParent() +  File.separator + "cmdwkhtmltopdf" + File.separator+ "testThymeleafResult.pdf";
         converterService.cmdwkhtmltopdf(htmlInputPathAndName, outputPdfPath);
     }
 
