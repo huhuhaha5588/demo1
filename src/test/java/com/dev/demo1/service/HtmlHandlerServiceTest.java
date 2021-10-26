@@ -51,18 +51,18 @@ public class HtmlHandlerServiceTest {
 
     //嵌入内容文件路径
     private String contentPathAndName;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         templatePathAndName = convertPath + template;
         File file1 = new File(templatePathAndName);
-        if(!file1.exists())
-            Assert.assertTrue("模版文件不存在:" + templatePathAndName,file1.exists());
+        if (!file1.exists())
+            Assert.assertTrue("模版文件不存在:" + templatePathAndName, file1.exists());
 
         contentPathAndName = convertPath + content;
         File file2 = new File(contentPathAndName);
-        if(!file2.exists())
-            Assert.assertTrue("嵌入内容文件不存在:" + templatePathAndName,file2.exists());
-
+        if (!file2.exists())
+            Assert.assertTrue("嵌入内容文件不存在:" + templatePathAndName, file2.exists());
 
     }
 
@@ -73,30 +73,29 @@ public class HtmlHandlerServiceTest {
     @Test
     public void replaceHtmlFromFile() throws IOException {
 
-        File contentFile = new  File(contentPathAndName);
+        File contentFile = new File(contentPathAndName);
         String contentString = FileUtils.readFileToString(contentFile, Charset.forName("utf8"));
 
 
         //替换map
-        Map<String ,String> map = new HashMap<>();
-        map.put("contents",contentString);
-        map.put("title","<h1>title<h1>");
+        Map<String, String> map = new HashMap<>();
+        map.put("contents", contentString);
+        map.put("title", "<h1>title<h1>");
 
 
         Set<String> keys = map.keySet();
         log.info("想要替换的Key有: " + keys);
-        File templateFile = new  File(templatePathAndName);
+        File templateFile = new File(templatePathAndName);
         String origenTempString = FileUtils.readFileToString(templateFile, Charset.forName("utf8"));
 
         //
-        String resultString = htmlHandlerService.replaceHtmlFromFile(templateFile,map);
-        for(String key :keys){
+        String resultString = HtmlHandlerService.replaceHtmlFromFile(templateFile, map);
+        for (String key : keys) {
             //模版中是否有要替换的key
-            if (origenTempString.contains("${" + key +"}")){
+            if (origenTempString.contains("${" + key + "}")) {
                 //有key情况下，应该替换了
                 Assert.assertTrue(resultString.contains(map.get(key)));
-            }
-            else {
+            } else {
                 log.error("模版中未包含替换的key ${" + key + "}");
             }
         }
@@ -123,8 +122,8 @@ public class HtmlHandlerServiceTest {
     @Test
     public void html2textFromFile() throws IOException {
 
-        File contentFile = new  File(contentPathAndName);
-        String text = htmlHandlerService.html2textFromFile(contentFile);
+        File contentFile = new File(contentPathAndName);
+        String text = HtmlHandlerService.html2textFromFile(contentFile);
         log.info(text);
     }
 
@@ -138,7 +137,7 @@ public class HtmlHandlerServiceTest {
     public void testThymeleaf() throws IOException {
 
         //从content文件转为string，template-html/content.thml
-        File contentFile = new  File(contentPathAndName);
+        File contentFile = new File(contentPathAndName);
         String htmlString = FileUtils.readFileToString(contentFile, Charset.forName("utf8"));
 
         //要替换的目标和内容放入Context
@@ -148,7 +147,7 @@ public class HtmlHandlerServiceTest {
 
 
         //用Thymeleaf 的templateEngine进行替换
-        String renderedhtml = templateEngine.process("template",ctx);
+        String renderedhtml = templateEngine.process("template", ctx);
 
         log.info(renderedhtml);
 
@@ -167,8 +166,6 @@ public class HtmlHandlerServiceTest {
         }
 
     }
-
-
 
 
 }

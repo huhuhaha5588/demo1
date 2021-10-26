@@ -12,7 +12,7 @@
     <result column="html" jdbcType="VARCHAR" property="html" />
     <result column="html_no_tag" jdbcType="VARCHAR" property="htmlNoTag" />
     <result column="stake_holder_id" jdbcType="INTEGER" property="stakeHolderId" />
-    <result column="yesr" jdbcType="INTEGER" property="yesr" />
+    <result column="year" jdbcType="INTEGER" property="year" />
     <result column="active" jdbcType="TINYINT" property="active" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
@@ -23,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, organization_id, user_id, document_no, page_no, `order`, title, html, html_no_tag, 
-    stake_holder_id, yesr, active, create_time, create_by, update_time, update_by, delete_time, 
+    stake_holder_id, year, active, create_time, create_by, update_time, update_by, delete_time,
     delete_by
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -40,13 +40,13 @@
     insert into html_page (organization_id, user_id, document_no, 
       page_no, `order`, title, 
       html, html_no_tag, stake_holder_id, 
-      yesr, active, create_time, 
+      year, active, create_time,
       create_by, update_time, update_by, 
       delete_time, delete_by)
     values (#{organizationId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{documentNo,jdbcType=INTEGER}, 
       #{pageNo,jdbcType=INTEGER}, #{order,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{html,jdbcType=VARCHAR}, #{htmlNoTag,jdbcType=VARCHAR}, #{stakeHolderId,jdbcType=INTEGER}, 
-      #{yesr,jdbcType=INTEGER}, #{active,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{year,jdbcType=INTEGER}, #{active,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
       #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{deleteTime,jdbcType=TIMESTAMP}, #{deleteBy,jdbcType=VARCHAR})
   </insert>
@@ -80,8 +80,8 @@
       <if test="stakeHolderId != null">
         stake_holder_id,
       </if>
-      <if test="yesr != null">
-        yesr,
+      <if test="year != null">
+        year,
       </if>
       <if test="active != null">
         active,
@@ -133,8 +133,8 @@
       <if test="stakeHolderId != null">
         #{stakeHolderId,jdbcType=INTEGER},
       </if>
-      <if test="yesr != null">
-        #{yesr,jdbcType=INTEGER},
+      <if test="year != null">
+        #{year,jdbcType=INTEGER},
       </if>
       <if test="active != null">
         #{active,jdbcType=TINYINT},
@@ -189,8 +189,8 @@
       <if test="stakeHolderId != null">
         stake_holder_id = #{stakeHolderId,jdbcType=INTEGER},
       </if>
-      <if test="yesr != null">
-        yesr = #{yesr,jdbcType=INTEGER},
+      <if test="year != null">
+        year = #{year,jdbcType=INTEGER},
       </if>
       <if test="active != null">
         active = #{active,jdbcType=TINYINT},
@@ -227,7 +227,7 @@
       html = #{html,jdbcType=VARCHAR},
       html_no_tag = #{htmlNoTag,jdbcType=VARCHAR},
       stake_holder_id = #{stakeHolderId,jdbcType=INTEGER},
-      yesr = #{yesr,jdbcType=INTEGER},
+      year = #{year,jdbcType=INTEGER},
       active = #{active,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=VARCHAR},

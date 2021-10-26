@@ -8,4 +8,8 @@
     <changeSet id="sql-01" author="gary zhang">
         <sqlFile path="classpath:db/changelog/init.sql"/>
     </changeSet>
+    <changeSet id="sql-02" author="gary zhang">
+        <sqlFile path="classpath:db/changelog/html_page-1.sql"/>
+    </changeSet>
+
 </databaseChangeLog>

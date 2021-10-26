@@ -1,0 +1,1 @@
+alter table html_page change yesr year int(10) unsigned DEFAULT NULL;

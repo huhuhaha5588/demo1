@@ -30,7 +30,7 @@ public class HtmlPage implements Serializable {
 
     private Integer stakeHolderId;
 
-    private Integer yesr;
+    private Integer year;
 
     private Boolean active;
 
@@ -70,7 +70,7 @@ public class HtmlPage implements Serializable {
             && (this.getHtml() == null ? other.getHtml() == null : this.getHtml().equals(other.getHtml()))
             && (this.getHtmlNoTag() == null ? other.getHtmlNoTag() == null : this.getHtmlNoTag().equals(other.getHtmlNoTag()))
             && (this.getStakeHolderId() == null ? other.getStakeHolderId() == null : this.getStakeHolderId().equals(other.getStakeHolderId()))
-            && (this.getYesr() == null ? other.getYesr() == null : this.getYesr().equals(other.getYesr()))
+            && (this.getYear() == null ? other.getYear() == null : this.getYear().equals(other.getYear()))
             && (this.getActive() == null ? other.getActive() == null : this.getActive().equals(other.getActive()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getCreateBy() == null ? other.getCreateBy() == null : this.getCreateBy().equals(other.getCreateBy()))
@@ -94,7 +94,7 @@ public class HtmlPage implements Serializable {
         result = prime * result + ((getHtml() == null) ? 0 : getHtml().hashCode());
         result = prime * result + ((getHtmlNoTag() == null) ? 0 : getHtmlNoTag().hashCode());
         result = prime * result + ((getStakeHolderId() == null) ? 0 : getStakeHolderId().hashCode());
-        result = prime * result + ((getYesr() == null) ? 0 : getYesr().hashCode());
+        result = prime * result + ((getYear() == null) ? 0 : getYear().hashCode());
         result = prime * result + ((getActive() == null) ? 0 : getActive().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getCreateBy() == null) ? 0 : getCreateBy().hashCode());
@@ -121,7 +121,7 @@ public class HtmlPage implements Serializable {
         sb.append(", html=").append(html);
         sb.append(", htmlNoTag=").append(htmlNoTag);
         sb.append(", stakeHolderId=").append(stakeHolderId);
-        sb.append(", yesr=").append(yesr);
+        sb.append(", year=").append(year);
         sb.append(", active=").append(active);
         sb.append(", createTime=").append(createTime);
         sb.append(", createBy=").append(createBy);

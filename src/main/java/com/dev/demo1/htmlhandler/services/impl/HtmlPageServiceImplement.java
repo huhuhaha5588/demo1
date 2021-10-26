@@ -18,7 +18,7 @@ public class HtmlPageServiceImplement implements HtmlPageService {
     private HtmlPageMapper htmlPageMapper;
 
     @Override
-    public List<HtmlPage> getHtmlPages(Integer id, Integer organizationId, Integer userId, Integer documentNo, Integer pageNo, Integer order, String title, Integer stakeHolderId, Integer yesr) {
+    public List<HtmlPage> getHtmlPages(Integer id, Integer organizationId, Integer userId, Integer documentNo, Integer pageNo, Integer order, String title, Integer stakeHolderId, Integer year) {
         List<HtmlPage> htmlPages = new ArrayList<>();
         htmlPages.add(htmlPageMapper.selectByPrimaryKey(id));
         return htmlPages;

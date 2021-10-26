@@ -58,7 +58,7 @@ public class HtmlPageServiceImplementTest {
         htmlPage.setOrder(2);
         htmlPage.setActive(true);
         htmlPage.setHtml(htmlString);
-        htmlPage.setHtmlNoTag(htmlHandlerService.html2text(htmlString));
+        htmlPage.setHtmlNoTag(HtmlHandlerService.html2text(htmlString));
         htmlPageServiceImplement.isertHtmlPage(htmlPage);
 
 

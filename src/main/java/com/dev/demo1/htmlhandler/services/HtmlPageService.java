@@ -14,7 +14,7 @@ public interface HtmlPageService {
                                 Integer order,
                                 String title,
                                 Integer stakeHolderId,
-                                Integer yesr);
+                                Integer year);
 
     HtmlPage getHtmlPage(Integer id);
 
