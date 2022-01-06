@@ -142,7 +142,7 @@ public class HtmlHandlerServiceTest {
 
         //要替换的目标和内容放入Context
         Context ctx = new Context();
-        ctx.setVariable("title", "这里是111~~~~~~~~~");
+        ctx.setVariable("title", "这里是title~~~~~~~~~");
         ctx.setVariable("htmlcontent", htmlString);
 
 
@@ -165,6 +165,11 @@ public class HtmlHandlerServiceTest {
                 bufferedWriter.close();
         }
 
+    }
+
+
+     @Test
+    public void testReadJson() {
     }
 
     /**
