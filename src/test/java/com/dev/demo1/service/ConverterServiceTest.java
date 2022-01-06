@@ -206,7 +206,8 @@ public class ConverterServiceTest {
     @Test
     public void cmdPDF2PPT() {
 //        pdfInputPathAndName = "src/main/resources/convert-path/cmdwkhtmltopdf/testThymeleafResult.pdf";
-//        pdfInputPathAndName = "src/main/resources/template-html/pdf/testThymeleafResult.pdf";
+        pdfInputPathAndName = "src/main/resources/template-html/cmdwkhtmltopdf/testThymeleafResult.pdf";
+
         File inputFile = new File(pdfInputPathAndName);
         String pdfFileName = inputFile.getName();
 
@@ -244,6 +245,7 @@ public class ConverterServiceTest {
         String outputPdfPath =  output.getParent() +  File.separator + "cmdwkhtmltopdf" + File.separator+ "testThymeleafResult.pdf";
         converterService.cmdwkhtmltopdf(htmlInputPathAndName, outputPdfPath);
     }
+
 
     @After
     public void tearDown() throws Exception {
