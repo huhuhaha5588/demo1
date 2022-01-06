@@ -147,7 +147,7 @@ public class ConverterService {
 
         //转换pdf 到 ppt
         //ppt 输出文件
-        String pptOutputPath = inputFile.getParent() + File.separator + "JodConverter-html2pdf"  + File.separator + "openoffic-cmd-pdf2ppt" + File.separator;
+        String pptOutputPath = inputFile.getParent() + File.separator + "JodConverter-html2pdf"  + File.separator + "openoffice-cmd-pdf2ppt" + File.separator;
         //默认输出路径为：输入路径文件夹下新建一个文件夹（以转换目标）
         log.info("ppt输出路径： " + pptOutputPath);
 

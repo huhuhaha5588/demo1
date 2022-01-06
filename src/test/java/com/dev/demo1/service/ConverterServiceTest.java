@@ -1,6 +1,7 @@
 package com.dev.demo1.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,19 +13,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
-@Slf4j
+//@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ConverterServiceTest {
+
+    private static final Logger log = org.apache.logging.log4j.LogManager.getLogger(ConverterServiceTest.class);
+
     /**
      * 整个类型转换测试类
      * 默认在resources/convert-path/文件夹下操作
      *
      */
     @Value("${config.properties.path.convert:src/main/resources/convert-path/}")
-    private String convertPath;
+    private String convertPath = "src/main/resources/convert-path/";
 
     //默认准备好的html文件
     private String htmlInputFileName = "testfroala.html";
@@ -40,11 +45,12 @@ public class ConverterServiceTest {
 
     //要转换成格式的后缀名
     private String targetExtensionType = "pdf";
-    @Autowired
-    private ConverterService converterService;
+
+    private ConverterService converterService = new ConverterService();
 
     @Before
     public void setUp() throws Exception {
+
         htmlInputPathAndName = convertPath + htmlInputFileName;
         File file1 = new File(convertPath, htmlInputFileName);
         Assert.assertTrue("文件不存在:" + htmlInputPathAndName, file1.exists());
@@ -132,7 +138,7 @@ public class ConverterServiceTest {
             pdfOutputFile.delete();
         }
 
-        String pptOutputPath = htmlInputPathAndName.replace(htmlFileName,"JodConverter-html2pdf"  + File.separator + "openoffic-cmd-pdf2ppt" + File.separator + htmlFileName.replace(".html",".ppt"));
+        String pptOutputPath = htmlInputPathAndName.replace(htmlFileName,"JodConverter-html2pdf"  + File.separator + "openoffice-cmd-pdf2ppt" + File.separator + htmlFileName.replace(".html",".ppt"));
         log.info("pptOutputPath: {}",pptOutputPath);
         File pptOutputFile = new File(pptOutputPath);
         //若存在先删除
