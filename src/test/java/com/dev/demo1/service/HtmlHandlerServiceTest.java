@@ -3,6 +3,9 @@ package com.dev.demo1.service;
 import com.dev.demo1.htmlhandler.entity.HtmlPage;
 import lombok.extern.slf4j.Slf4j;
 import org.jodconverter.core.util.FileUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,12 +18,10 @@ import org.springframework.ui.Model;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -142,7 +143,7 @@ public class HtmlHandlerServiceTest {
 
         //要替换的目标和内容放入Context
         Context ctx = new Context();
-        ctx.setVariable("title", "这里是title~~~~~~~~~");
+        ctx.setVariable("title", "这里是1111~~~~~~~~~");
         ctx.setVariable("htmlcontent", htmlString);
 
 
@@ -159,7 +160,7 @@ public class HtmlHandlerServiceTest {
 
         } catch (IOException e) {
             System.out.println("Exception occurred: " + e.getMessage());
-            System.out.println("Exception occurred: " + e.getMessage());
+
         } finally {
             if (bufferedWriter != null)
                 bufferedWriter.close();
@@ -168,41 +169,38 @@ public class HtmlHandlerServiceTest {
     }
 
 
-     @Test
+    @Test
     public void testReadJson() {
-    }
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj;
+            obj = parser.parse(new FileReader("/Users/johnzhang/IdeaProjects/demo1/src/main/resources/templates/template.json"));
 
-    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */    /**
-     * 用Thymeleaf 的templateEngine
-     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
-     * 得到的string 输出到testThymeleafResult.html
-     */
+            // A JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
+            JSONObject jsonObject = (JSONObject) obj;
+            String templateStr = "";
+            for (Object o : jsonObject.keySet()) {
+                JSONArray companyList = (JSONArray) jsonObject.get(o);
+                for (Object o1 : companyList) {
+                    templateStr = templateStr + o1.toString();
+                }
+            }
+
+            //把最终结果放在testThymeleafResult.html文件中
+            BufferedWriter bufferedWriter = null;
+            try {
+                bufferedWriter = new BufferedWriter(new FileWriter(convertPath + "template.txt"));
+                bufferedWriter.write(templateStr);
+
+            } catch (IOException e) {
+                System.out.println("Exception occurred: " + e.getMessage());
+
+            } finally {
+                if (bufferedWriter != null)
+                    bufferedWriter.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

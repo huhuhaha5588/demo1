@@ -79,7 +79,11 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
         <!--jodconverter-->
         <dependency>
             <groupId>org.jodconverter</groupId>
@@ -95,6 +99,12 @@
             <groupId>org.jodconverter</groupId>
             <artifactId>jodconverter-spring-boot-starter</artifactId>
             <version>4.4.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--poi-->
