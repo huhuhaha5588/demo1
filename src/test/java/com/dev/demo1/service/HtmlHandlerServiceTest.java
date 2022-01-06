@@ -193,7 +193,7 @@ public class HtmlHandlerServiceTest {
                 bufferedWriter.write(templateStr);
 
             } catch (IOException e) {
-                System.out.println("Exception occurred: " + e.getMessage());
+                System.out.println("Exception occurred:123 " + e.getMessage());
 
             } finally {
                 if (bufferedWriter != null)
