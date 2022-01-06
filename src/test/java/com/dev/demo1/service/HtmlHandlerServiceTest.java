@@ -142,7 +142,7 @@ public class HtmlHandlerServiceTest {
 
         //要替换的目标和内容放入Context
         Context ctx = new Context();
-        ctx.setVariable("title", "这里是title~~~~~~~~~");
+        ctx.setVariable("title", "这里是111~~~~~~~~~");
         ctx.setVariable("htmlcontent", htmlString);
 
 
@@ -159,7 +159,7 @@ public class HtmlHandlerServiceTest {
 
         } catch (IOException e) {
             System.out.println("Exception occurred: " + e.getMessage());
-
+            System.out.println("Exception occurred: " + e.getMessage());
         } finally {
             if (bufferedWriter != null)
                 bufferedWriter.close();
@@ -167,5 +167,37 @@ public class HtmlHandlerServiceTest {
 
     }
 
-
+    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */    /**
+     * 用Thymeleaf 的templateEngine
+     * 把content.thml文件替换到templates/template.html的Thymeleaf模版中
+     * 得到的string 输出到testThymeleafResult.html
+     */
 }
